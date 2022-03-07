@@ -20,13 +20,13 @@ let num1 = 10;
 var num2 = 4;
 
 const addition = num1 + num2; // 10+4 = 14
-console.log(addition);
+console.log("10 + 4 = " + addition);
 const subtraction = num1 - num2; //10-4 = 6
-console.log(subtraction);
+console.log("10 - 4 = " + subtraction);
 const multiplication = num1 * num2; //10 *4 = 40;
-console.log(multiplication);
+console.log("10 x 4 = " + multiplication);
 const division = num1 / num2; // 10/4 = 2.5;
-console.log(division);
+console.log("10 / 4 = " + division);
 
 // conditional operators
 if (num1 > num2) {
