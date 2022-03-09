@@ -1,5 +1,4 @@
 // hello world workshop
-
 const int = 1;
 const float = 2.3;
 const double = 3.7;
@@ -29,12 +28,23 @@ const division = num1 / num2; // 10/4 = 2.5;
 console.log("10 / 4 = " + division);
 
 // conditional operators
-if (num1 > num2) {
-    console.log("num1 is larger than num2.")
+var parameter1 = 4;
+var parameter2 = 8;
+
+function numberComparer(num1, num2) {
+    if (num1 > num2) {
+        console.log(num1 + " is larger than " + num2);
+    }
+    else if (num2 > num1) {
+        console.log(num2 + " is larger than " + num1);
+    }
+    else {
+        console.log("num1 is equal to num2.");
+    }
+    parameter1 = 10;
 }
-else if (num2 > num1) {
-    console.log("num2 is larger than num1.")
-}
-else {
-    console.log("num1 is equal to num2.")
-}
+
+numberComparer(parameter1, parameter2)
+numberComparer(parameter1, parameter2)
+
+
