@@ -8,6 +8,7 @@ window.onload = function(){
     var buttonReset = document.getElementById("btn-reset");
     var Interval;
 
+
     buttonStart.addEventListener('click', () => {
         clearInterval(Interval);
         Interval = setInterval(startTimer, 10);  // millisecond 10 = 0.01 second
