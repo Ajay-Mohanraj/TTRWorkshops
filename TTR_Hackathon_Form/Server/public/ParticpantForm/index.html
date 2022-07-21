@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Alarm Clock</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div id="registration-form">
+      <div class='fieldset'>
+        <legend>Registration Form</legend>
+        <form action="#" method="post" data-validate="parsley">
+          <div class='row'>
+            <label for='firstname'>First Name (personal name / preferred name) </label>
+            <input type="text" placeholder="First Name" name='firstname' id='firstname' data-required="true" data-error-message="Your First Name is required">
+          </div>
+          <div class='row'>
+            <label for='lastname'>Last name (family name / surname) </label>
+            <input type="text" placeholder="Last Name" name='lastname' id='lastname' data-required="true" data-error-message="Your Last Name is required">
+          </div>
+          <div class='row'>
+            <label for='birthdate'>Birthdate (MM / DD / YYYY) </label>
+            <input type="text" placeholder="Birthdate" name='birthdate' id='birthdate' data-required="true" data-error-message="Your Birthdate is required">
+          </div>
+          <div class='row'>
+            <label for='connect'>Would you like to connect with companies like Microsoft and WorldData.AI for fresh opportunities? (Yes or No)</label>
+            <input type="text" placeholder="Connect for Opportunities?" name='connect' id='connect' data-required="true" data-error-message="Question must be answered">
+          </div>
+          <div class='row'>
+            <label for='leadership'>Are you interested in gaining leadership experience through any of these roles? (Optional) (Event Promoter - Post marketing flyers on social media
+              Peer Mentor - Guide event participants towards submitting projects
+              Conference Volunteer - Staff local venues during onsite events
+              Discord Moderator - Engage community members on messaging platforms)</label>
+            <input type="text" placeholder="Leadership" name='leadership' id='leadership' >
+          </div>
+          <div class='row'>
+            <label for='invitation'>Would you like to invite any friends? If yes, please leave their email addresses (separated by commas) so we can reach out to them! (Optional)</label>
+            <input type="text" placeholder="Invitations" name='invitation' id='invitation' >
+          </div>
+          <div class='row'>
+            <label for='permission'> Our goal is to connect YOU with the best employers, information, mentors, opportunities, resources, teammates, etc. The information you have provided will help us do so. "I hereby grant you ownership of and permission to share and use any of my data submitted to your accounts, events, web pages, etc. for the purposes of organizing educational events, managing the community, communicating information, coordinating with personnel and volunteers, supporting partners and sponsors, updating me about mentors, opportunities, resources, etc. that may benefit me, and other purposes that may enhance your abilities to increase educational impact for others, especially the underserved and overlooked." </label>
+            <input type="text" placeholder="Birthdate" name='birthdate' id='birthdate' data-required="true" data-error-message="Your Birthdate is required">
+            <label>
+              <input type="checkbox" name="permission" id="permission" data-required="true" data-error-message="Permission Required">
+              Yes?
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+
+  </body>
+</html>
