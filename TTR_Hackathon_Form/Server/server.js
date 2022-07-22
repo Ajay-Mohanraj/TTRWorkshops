@@ -26,6 +26,7 @@ try {
 const app = express();
 app.use(parser.json());
 
+// Participant Form
 app.post("/registration/participants", async (req, res) => {
   // Insert data into mongodb
   // Req body is a json like {q1: ..., q2:... ... }
@@ -42,6 +43,7 @@ app.post("/registration/participants", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
+// Speaker Form
 app.post("/registration/speakers", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Speakers");
@@ -56,6 +58,7 @@ app.post("/registration/speakers", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
+// Mentor Form
 app.post("/registration/mentors", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Mentors");
@@ -70,6 +73,7 @@ app.post("/registration/mentors", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
+// Judge Form
 app.post("/registration/judges", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Judges");
@@ -84,6 +88,7 @@ app.post("/registration/judges", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
+// Evaluation Form
 app.post("/evaluations", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Evaluations");
@@ -98,6 +103,7 @@ app.post("/evaluations", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
+// Start listening to Port 3000
 app.listen(3000, () => {
   console.log("Server listening to 3000");
 });
