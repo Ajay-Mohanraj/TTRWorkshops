@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const parser = require("body-parser");
@@ -8,8 +10,7 @@ const SECRET = "njndcj;o(*!#IUHui2h1oih(H!(Hib32beib9!(bjbsjincj+_=fsjkfij2";
 // 1.Security
 // 2. Sign in page + private view displaying participants
 // 3. Test DB performance
-const uri =
-  "mongodb+srv://TTR_Hackathon:FuDKszE6p27lygOY@hackathondb.ertbk.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.DATABASE_URL;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
