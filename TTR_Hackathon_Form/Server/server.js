@@ -1,10 +1,15 @@
-require('dotenv').config()
+require("dotenv").config();
 
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const parser = require("body-parser");
+const path = require("path");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const ejs = require("ejs");
+const { emit } = require("process");
 
-const SECRET = "njndcj;o(*!#IUHui2h1oih(H!(Hib32beib9!(bjbsjincj+_=fsjkfij2";
+const SECRET = process.env.SECRET;
 
 // Next phase:
 // 1.Security
@@ -28,6 +33,18 @@ try {
 
 const app = express();
 app.use(parser.json());
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "public"));
+
+// DB Display
+app.get("/", (req, res) => {
+  const collection = client.db("HackathonDB").collection("Participants");
+  collection.find().toArray((err, docs) => {
+    res.render("DbDisplay/db_display", {
+      lst: docs,
+    });
+  });
+});
 
 // Participant Form
 app.post("/registration/participants", async (req, res) => {
@@ -36,8 +53,8 @@ app.post("/registration/participants", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Participants");
     // collection.createIndex({ Email: 1 }, { unique: true });
-    const res = await collection.insertOne(req.body);
-    console.log(res);
+    const result = await collection.insertOne(req.body);
+    console.log(result);
   } catch (err) {
     if (err.code == 11000) {
       return res.json({ status: "error", msg: "Duplicated email" });
@@ -51,8 +68,8 @@ app.post("/registration/speakers", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Speakers");
     // collection.createIndex({ Email: 1 }, { unique: true });
-    const res = await collection.insertOne(req.body);
-    console.log(res);
+    const result = await collection.insertOne(req.body);
+    console.log(result);
   } catch (err) {
     if (err.code == 11000) {
       return res.json({ status: "error", msg: "Duplicated email" });
@@ -66,8 +83,8 @@ app.post("/registration/mentors", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Mentors");
     // collection.createIndex({ Email: 1 }, { unique: true });
-    const res = await collection.insertOne(req.body);
-    console.log(res);
+    const result = await collection.insertOne(req.body);
+    console.log(result);
   } catch (err) {
     if (err.code == 11000) {
       return res.json({ status: "error", msg: "Duplicated email" });
@@ -81,8 +98,8 @@ app.post("/registration/judges", async (req, res) => {
   try {
     const collection = client.db("HackathonDB").collection("Judges");
     // collection.createIndex({ Email: 1 }, { unique: true });
-    const res = await collection.insertOne(req.body);
-    console.log(res);
+    const result = await collection.insertOne(req.body);
+    console.log(result);
   } catch (err) {
     if (err.code == 11000) {
       return res.json({ status: "error", msg: "Duplicated email" });
@@ -106,21 +123,61 @@ app.post("/evaluations", async (req, res) => {
   res.json({ status: "success", msg: "Insert entry success" });
 });
 
-app.post("/login", async (req, res) => {
-  const { username, pwd } = req.body;
-  console.log(username, pwd);
+app.post("/signup", async (req, res) => {
+  console.log(req.body);
+  const { username, email, password } = req.body;
+  console.log(username, password);
+  // fields check
+  if (!username || !email || !password)
+    return res.json({ status: "error", error: "Invalid entries" });
+  if (password.length < 6)
+    return res.json({ status: "error", error: "Password too short" });
 
-  if (!username || !pwd)
+  // Encryption
+  const encrypt = await bcrypt.hash(password, 10);
+
+  // Save to db
+  try {
+    const collection = client.db("HackathonDB").collection("Admin");
+    const result = await collection.insertOne({
+      Username: username,
+      Email: email,
+      Password: encrypt,
+    });
+    console.log(result);
+  } catch (err) {
+    if (err.code == 11000) {
+      return res.json({ status: "error", error: "Duplicated email" });
+    }
+    return res.json({ status: "error" });
+  }
+
+  const token = jwt.sign(
+    {
+      username: username,
+      email: email,
+    },
+    SECRET
+  );
+  res.json({ status: "ok", data: token });
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  console.log(username, password);
+
+  if (!username || !password)
     return res.json({ status: "error", error: "Invalid entries" });
 
   const collection = client.db("HackathonDB").collection("Admin");
-  const u = colllection.findOne({ username: username });
+  const u = await collection.findOne({ Username: username });
   if (!u) return res.json({ status: "error", error: "User not found" });
-  if (await bcrypt.compare(pwd, u.password)) {
+  console.log(u);
+  if (await bcrypt.compare(password, u.Password)) {
     const token = jwt.sign(
       {
         username: u.username,
-        email: user.email,
+        email: u.email,
       },
       SECRET
     );
