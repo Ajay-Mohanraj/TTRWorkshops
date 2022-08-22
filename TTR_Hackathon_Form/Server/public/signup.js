@@ -6,9 +6,9 @@ async function userRegistration(event) {
   event.preventDefault();
   const username = document.getElementById("name").value;
   const email = document.getElementById("email").value;
-  const pwd = document.getElementById("pwd").value;
+  const password = document.getElementById("pwd").value;
 
-  const res = await fetch("/register", {
+  const res = await fetch("/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ async function userRegistration(event) {
     body: JSON.stringify({
       username,
       email,
-      pwd,
+      password,
     }),
   }).then((res) => res.json());
 
@@ -24,7 +24,7 @@ async function userRegistration(event) {
     alert("Success");
     // go to alarm clock
     localStorage.setItem("token", res.data);
-    window.location.replace("/ParticpantForm/index.html");
+    window.location.replace("/ParticipantForm/index.html");
   } else {
     alert(res.error);
   }

@@ -5,7 +5,7 @@ form.addEventListener("submit", userLogin);
 async function userLogin(event) {
   event.preventDefault();
   const username = document.getElementById("name").value;
-  const pwd = document.getElementById("pwd").value;
+  const password = document.getElementById("pwd").value;
 
   const res = await fetch("/login", {
     method: "POST",
@@ -14,10 +14,11 @@ async function userLogin(event) {
     },
     body: JSON.stringify({
       username,
-      pwd,
+      password,
     }),
   }).then((res) => res.json());
-  if (res.status == "ok") {
+  console.log(res);
+  if (res.status == "success") {
     localStorage.setItem("token", res.data);
     // go to alarm clock
     window.location.replace("/ParticipantForm/index.html");
